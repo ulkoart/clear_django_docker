@@ -102,4 +102,4 @@ ENV/
 
 dockerfiles/static
 dockerfiles/db_data
-src/static_root
+src/static_root/
