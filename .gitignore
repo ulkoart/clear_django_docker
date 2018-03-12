@@ -99,3 +99,7 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+/dockerfiles/static
+/dockerfiles/db_data
+/src/static_root
