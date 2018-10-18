@@ -9,6 +9,7 @@ services:
     volumes:
       - ./config/nginx:/etc/nginx/conf.d
       - ./dockerfiles/static:/static
+      - ./dockerfiles/media:/media
     depends_on:
       - web
   db:
@@ -22,11 +23,12 @@ services:
     restart: always
     build: .
     env_file:
-      - ${ENV_VER}.env
+      - ${ENV_FILE}.env
     command: ./docker-entrypoint.sh db
     volumes:
-      - ./srс:/src
-      - ./dockerfiles/static:/src/static_root
+      - ./src:/src
+      - ./dockerfiles/static:/static
+      - ./dockerfiles/media:/media
     expose:
       - "8000"
     depends_on:
