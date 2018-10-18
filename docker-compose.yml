@@ -23,7 +23,7 @@ services:
     build: .
     env_file:
       - ${ENV_VER}.env
-    command: ./docker-entrypoint.sh
+    command: ./docker-entrypoint.sh db
     volumes:
       - ./srс:/src
       - ./dockerfiles/static:/src/static_root
