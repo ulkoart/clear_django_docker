@@ -1,15 +1,14 @@
 version: '3'
 
 services:
-
   nginx:
     image: nginx:latest
     ports:
       - "8000:8000"
     volumes:
-      - ./config/nginx:/etc/nginx/conf.d
-      - ./dockerfiles/static:/static
-      - ./dockerfiles/media:/media
+      - ./dockerfiles/config/nginx:/etc/nginx/conf.d
+      - ./dockerfiles/media:/media:ro
+      - static_volume:/static:ro
     depends_on:
       - web
   db:
@@ -21,15 +20,20 @@ services:
       - ./dockerfiles/db_data:/var/lib/postgresql/data
   web:
     restart: always
-    build: .
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile
     env_file:
-      - ${ENV_FILE}.env
-    command: ./docker-entrypoint.sh db
+      - ./dockerfiles/.envs/.env
+    command: /docker-entrypoint.sh db
     volumes:
       - ./src:/src
-      - ./dockerfiles/static:/static
       - ./dockerfiles/media:/media
+      - static_volume:/static
     expose:
       - "8000"
     depends_on:
       - db
+
+volumes:
+  static_volume:
